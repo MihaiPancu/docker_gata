@@ -1,0 +1,9 @@
+version: '3'
+services:
+        ceva:
+                image: 'asd'
+                build:
+                        context: .
+                container_name: iei
+                ports:
+                        - 5000:80
