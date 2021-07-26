@@ -1,11 +1,22 @@
 Resources:
+  NewSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+        GroupDescription: Allow port
+        SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 5000
+          ToPort: 5000
+          CidrIp: 0.0.0.0/0
   Ec2Instance:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-0a8e758f5e873d1c1
       KeyName: cheie-mihai-pc
       InstanceType: t2.micro
-      UserData:
+      SecurityGroups:
+        - !Ref NewSecurityGroup
+      UserData: 
         Fn::Base64:                                
           !Sub |
               #!/bin/bash -ex
@@ -14,6 +25,7 @@ Resources:
               sh get-docker.sh;
               sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose;
               chmod +x /usr/local/bin/docker-compose;
-              git clone https://github.com/MihaiPancu/docker_aws.git;
-              cd docker_aws;
+              git clone https://github.com/MihaiPancu/docker_gata.git;
+              cd docker_gata;
               docker-compose up;
+
